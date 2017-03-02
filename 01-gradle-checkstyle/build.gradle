@@ -1,8 +1,14 @@
 apply plugin: 'java'
 apply plugin: 'application'
 
+apply plugin: 'checkstyle'
+
+checkstyle {
+    toolVersion = '7.6'
+}
+
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
@@ -10,4 +16,4 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
-mainClassName = 'com.deniz.HelloWorldDist'
+mainClassName = "com.deniz.Application"
