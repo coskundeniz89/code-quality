@@ -1,0 +1,49 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+apply plugin: 'jdepend'
+
+repositories {
+    mavenCentral()
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.4'
+}
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.21'
+    testCompile 'junit:junit:4.12'
+}
+
+mainClassName = "com.deniz.Application"
+
+jdepend {
+    toolVersion = "2.9.1"
+    sourceSets = [sourceSets.main]
+}
+
+jdependMain {
+    reports {
+        xml.enabled true
+        text.enabled false
+    }
+}
+
+task jdependReport(dependsOn: jdependMain, group: 'verification', description: 'Generates a HTML report after executing jdepend checks.') {
+    doLast() {
+        ant.xslt(in: "$reporting.baseDir/jdepend/main.xml",
+                style: "$rootDir/config/jdepend/jdepend.xsl",
+                out: "$reporting.baseDir/jdepend/main.html")
+    }
+
+}
+
+check {
+    dependsOn += ['jdependReport']
+}
+
+
+
+
+
