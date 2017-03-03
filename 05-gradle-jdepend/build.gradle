@@ -21,6 +21,7 @@ mainClassName = "com.deniz.Application"
 jdepend {
     toolVersion = "2.9.1"
     sourceSets = [sourceSets.main]
+    //todo ignore u ekle.
 }
 
 jdependMain {
