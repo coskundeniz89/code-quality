@@ -1,0 +1,23 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+apply plugin: 'findbugs'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.21'
+    testCompile 'junit:junit:4.12'
+}
+
+mainClassName = "com.deniz.Application"
+
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled false
+        html.enabled true
+        html.stylesheet resources.text.fromFile('config/findbugs/default.xsl')
+    }
+}
