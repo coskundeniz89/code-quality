@@ -1,0 +1,53 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+repositories {
+    mavenCentral()
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.4'
+}
+
+configurations {
+    jaxws
+}
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.21'
+    jaxws 'com.sun.xml.ws:jaxws-tools:2.2.10'
+    testCompile 'junit:junit:4.12'
+}
+
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+
+mainClassName = "com.deniz.Application"
+
+task wsimportKpsPublic {
+    doLast {
+        ext.destDir = file("${projectDir}/src/main/java/")
+        ext.packageName = 'generated.tckimlik.kpspublic'
+        ext.wsdlUrl = 'https://tckimlik.nvi.gov.tr/Service/KPSPublic.asmx?WSDL'
+        ant {
+            sourceSets.main.output.classesDir.mkdirs()
+            destDir.mkdirs()
+            taskdef(name: 'wsimport',
+                    classname: 'com.sun.tools.ws.ant.WsImport',
+                    classpath: configurations.jaxws.asPath
+            )
+            wsimport(keep: true,
+                    destdir: sourceSets.main.output.classesDir,
+                    package: packageName,
+                    sourcedestdir: destDir,
+                    wsdl: wsdlUrl,
+                    encoding: "UTF-8") {
+                xjcarg(value: "-XautoNameResolution")
+            }
+        }
+    }
+}
