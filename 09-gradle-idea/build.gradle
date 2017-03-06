@@ -1,7 +1,6 @@
 apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: 'idea'
-apply plugin: 'codenarc'
 
 repositories {
     mavenCentral()
