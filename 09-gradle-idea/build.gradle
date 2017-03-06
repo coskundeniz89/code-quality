@@ -13,6 +13,7 @@ task wrapper(type: Wrapper) {
 
 mainClassName = "com.deniz.Application"
 
+//todo idea ayarlarını yap
 idea {
     module {
         //default settings for downloading sources and Javadoc:
