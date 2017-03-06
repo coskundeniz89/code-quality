@@ -1,0 +1,27 @@
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'idea'
+apply plugin: 'codenarc'
+
+repositories {
+    mavenCentral()
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.4'
+}
+
+mainClassName = "com.deniz.Application"
+
+idea {
+    module {
+        //default settings for downloading sources and Javadoc:
+        downloadSources = true
+        downloadJavadoc = true
+    }
+}
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.21'
+    testCompile 'junit:junit:4.12'
+}
